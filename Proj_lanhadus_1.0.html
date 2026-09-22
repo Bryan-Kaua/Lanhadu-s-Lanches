@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanhadu's Delivery - Alvorada</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #ff6b00; 
+            --primary-hover: #e05e00;
+            --dark: #121212; 
+            --dark-card: #1e1e1e; 
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --danger: #dc3545;
+            --danger-hover: #c82333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        header {
+            background-color: rgba(18, 18, 18, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        #auth-user-name {
+            color: var(--primary);
+            font-size: 0.85rem;
+            background: #2a2a2a;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=1920') no-repeat center center/cover;
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(255, 107, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            background-color: #2a2a2a;
+        }
+
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .card-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff2a2a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+
+        .filter-btn {
+            background: #2a2a2a;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Form & Modals */
+        .admin-card, .login-card {
+            background: var(--dark-card);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid #2a2a2a;
+            max-width: 500px;
+            margin: 0 auto 25px;
+            width: 100%;
+        }
+        
+        .admin-card {
+            max-width: 850px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #333;
+            background-color: #262626;
+            color: #fff;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .admin-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2a2a2a;
+            background: #222;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Custom Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.82);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+        .modal-box {
+            background: var(--dark-card);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 480px;
+            width: 92%;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .modal-message {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* Floating WhatsApp Button */
+        .wpp-float-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25d366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            z-index: 900;
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .wpp-float-btn:hover {
+            transform: scale(1.06);
+            background: #20ba5a;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 40px 0 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .footer-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .footer-col h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .admin-link {
+            color: #555;
+            font-size: 0.8rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .admin-link:hover {
+            color: var(--primary);
+        }
+
+        .auth-tab {
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .user-avatar-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #282828;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid #3a3a3a;
+            font-size: 0.85rem;
+        }
+        .role-badge {
+            background: var(--primary);
+            color: white;
+            font-size: 0.68rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            .nav-links { display: none; }
+            .footer-info { flex-direction: column; text-align: center; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MODAL CUSTOMIZADO -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-box text-center">
+            <h3 id="modal-title" class="modal-title">Aviso</h3>
+            <p id="modal-message" class="modal-message">Mensagem aqui</p>
+            <div class="modal-actions justify-center">
+                <button id="modal-cancel" class="btn btn-outline" style="display: none;">Cancelar</button>
+                <button id="modal-confirm" class="btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+    <a id="wpp-float-link" class="wpp-float-btn" href="https://wa.me/5551986103520?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20pedido." target="_blank">
+        <i class="fa-brands fa-whatsapp" style="font-size: 1.5rem;"></i>
+        <span>Fazer Pedido</span>
+    </a>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo" onclick="window.appNav.showCustomer()">Lanhadu's</a>
+            <ul class="nav-links">
+                <li><a onclick="window.appNav.showCustomer()"><i class="fa-solid fa-utensils"></i> Cardápio</a></li>
+                <li><a href="#entrega"><i class="fa-solid fa-truck-fast"></i> Entrega</a></li>
+                
+                <li id="nav-login-btn">
+                    <a onclick="window.appNav.showLogin()" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.85rem;">
+                        <i class="fa-regular fa-user"></i> Entrar / Registrar
+                    </a>
+                </li>
+                
+                <li id="nav-user-info" style="display: none;">
+                    <div class="user-avatar-badge">
+                        <i class="fa-solid fa-circle-user" style="color: var(--primary);"></i>
+                        <span id="auth-user-name">Carregando...</span>
+                        <span id="auth-role-badge" class="role-badge">CLIENTE</span>
+                    </div>
+                </li>
+                <li id="nav-admin-btn" style="display: none;">
+                    <a onclick="window.appNav.showAdmin()" style="color: var(--primary); font-weight: 700;">
+                        <i class="fa-solid fa-gauge-high"></i> Painel Admin
+                    </a>
+                </li>
+                <li id="nav-logout-btn" style="display: none;">
+                    <a onclick="window.appAuth.logout()" style="color: var(--text-muted);" title="Sair da Conta"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div id="customer-view">
+        <section class="hero" id="home">
+            <div class="container fade-in">
+                <h1>Fome de Leão?</h1>
+                <p>Os melhores lanches artesanais de Alvorada, entregues quentinhos e suculentos na sua porta.</p>
+                <a href="#cardapio" class="btn" style="font-size: 1.1rem; padding: 14px 28px;">
+                    <i class="fa-solid fa-burger"></i> Ver Cardápio & Pedir
+                </a>
+            </div>
+        </section>
+
+        <section id="ofertas" style="background-color: #161616;">
+            <div class="container">
+                <h2 class="section-title fade-in"><i class="fa-solid fa-fire"></i> Ofertas do Dia</h2>
+                <div class="grid-container" id="ofertas-container">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="cardapio">
+            <div class="container">
+                <h2 class="section-title fade-in"><i class="fa-solid fa-book-open"></i> Nosso Cardápio</h2>
+                
+                <!-- Filtros de Categoria -->
+                <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+                    <button class="filter-btn active" onclick="window.appStore.filterCategory('Todos', this)">Todos</button>
+                    <button class="filter-btn" onclick="window.appStore.filterCategory('Xis', this)">Xis</button>
+                    <button class="filter-btn" onclick="window.appStore.filterCategory('Cachorro Quente', this)">Cachorro Quente</button>
+                    <button class="filter-btn" onclick="window.appStore.filterCategory('Porções', this)">Porções & Picadão</button>
+                    <button class="filter-btn" onclick="window.appStore.filterCategory('Bebidas', this)">Bebidas</button>
+                    <button class="filter-btn" onclick="window.appStore.filterCategory('Adicionais', this)">Adicionais</button>
+                </div>
+
+                <div class="grid-container" id="cardapio-container">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="entrega" style="background-color: #161616; text-align: center;">
+            <div class="container fade-in">
+                <h2 class="section-title"><i class="fa-solid fa-location-dot"></i> Área de Entrega</h2>
+                <p style="font-size: 1.1rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 20px;">
+                    Entregamos em <strong>toda Alvorada/RS</strong>! A taxa de entrega é calculada com carinho de acordo com o seu bairro. Faça o seu pedido diretamente no WhatsApp para consultar o tempo de entrega exato!
+                </p>
+                <div style="display: inline-flex; align-items: center; gap: 12px; background: #222; padding: 12px 24px; border-radius: 30px; border: 1px solid #333;">
+                    <i class="fa-solid fa-motorcycle" style="color: var(--primary); font-size: 1.5rem;"></i>
+                    <span style="font-weight: 600;">Tele-Entrega Rápida & Segura em Alvorada</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="footer-info">
+                    <div class="footer-col">
+                        <h4><i class="fa-regular fa-clock"></i> Horário de Funcionamento</h4>
+                        <p>Segunda a Sábado</p>
+                        <p>Das 19h às 00:00h</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4><i class="fa-brands fa-whatsapp"></i> Atendimento & Pedidos</h4>
+                        <p>WhatsApp: <span id="footer-phone-display">(51) 98610-3520</span></p>
+                        <p>Instagram: @lanhadu's</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4><i class="fa-solid fa-location-dot"></i> Retirada no Balcão</h4>
+                        <p>Av. Salomé, 993</p>
+                        <p>Alvorada - RS</p>
+                    </div>
+                </div>
+                <p style="color: #666; font-size: 0.85rem;">&copy; 2026 Lanhadu's Delivery. Todos os direitos reservados. | <span class="admin-link" onclick="window.appNav.showAdmin()">Acesso Painel Admin</span></p>
+            </div>
+        </footer>
+    </div>
+
+    <div id="login-view" style="display: none;" class="hero">
+        <div class="container" style="max-width: 480px; width: 100%; margin: 0 auto;">
+            <div class="login-card fade-in" style="padding: 30px 25px;">
+                <!-- Abas Entrar / Cadastrar -->
+                <div style="display: flex; margin-bottom: 25px; border-bottom: 1px solid #333;">
+                    <div id="tab-login" class="auth-tab active" onclick="window.appAuth.switchTab('login')">
+                        <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                    </div>
+                    <div id="tab-register" class="auth-tab" onclick="window.appAuth.switchTab('register')">
+                        <i class="fa-solid fa-user-plus"></i> Criar Conta
+                    </div>
+                </div>
+
+                <!-- FORMULÁRIO DE LOGIN -->
+                <form id="form-login" onsubmit="window.appAuth.handleLogin(event)">
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-envelope"></i> E-mail *</label>
+                        <input type="email" id="login-email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-lock"></i> Senha *</label>
+                        <input type="password" id="login-password" required placeholder="Sua senha secreta">
+                    </div>
+                    <div id="login-error-msg" style="display:none; color: #ff4d4d; font-size: 0.85rem; margin-bottom: 12px; background: rgba(255,77,77,0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,77,77,0.3);"></div>
+                    
+                    <button type="submit" class="btn" style="width: 100%; padding: 12px;" id="btn-login-submit">
+                        <i class="fa-solid fa-right-to-bracket"></i> Entrar na Conta
+                    </button>
+                </form>
+
+                <!-- FORMULÁRIO DE REGISTRO EM BANCO DE DADOS -->
+                <form id="form-register" onsubmit="window.appAuth.handleRegister(event)" style="display: none;">
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-user"></i> Nome Completo *</label>
+                        <input type="text" id="reg-name" required placeholder="Ex: Maria Silva">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-envelope"></i> E-mail *</label>
+                        <input type="email" id="reg-email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-brands fa-whatsapp"></i> Telefone / WhatsApp *</label>
+                        <input type="tel" id="reg-phone" required placeholder="(00)000000000" maxlength="13" pattern="\(\d{2}\)\d{9}" title="Digite no formato (00)000000000">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-location-dot"></i> Endereço Padrão de Entrega</label>
+                        <input type="text" id="reg-address" placeholder="Rua, Número, Bairro - Alvorada">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-lock"></i> Senha (mín. 6 caracteres) *</label>
+                        <input type="password" id="reg-password" required minlength="6" placeholder="******">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-shield-halved"></i> Tipo de Conta</label>
+                        <select id="reg-role">
+                            <option value="customer">Cliente (Para Fazer Pedidos)</option>
+                            <option value="admin">Administrador (Para Gerenciar Cardápio)</option>
+                        </select>
+                    </div>
+                    <div id="reg-error-msg" style="display:none; color: #ff4d4d; font-size: 0.85rem; margin-bottom: 12px; background: rgba(255,77,77,0.1); padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,77,77,0.3);"></div>
+
+                    <button type="submit" class="btn" style="width: 100%; padding: 12px;" id="btn-reg-submit">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Registrar Conta no Banco
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-view" style="display: none; padding-top: 90px; min-height: 100vh;">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                <h2 style="color: var(--primary); font-size: 1.8rem; font-weight: 700;">
+                    <i class="fa-solid fa-sliders"></i> Painel Administrativo
+                </h2>
+                <button class="btn btn-outline" onclick="window.appNav.showCustomer()">
+                    <i class="fa-solid fa-store"></i> Ver Loja
+                </button>
+            </div>
+
+            <!-- Configurações Gerais -->
+            <div class="admin-card fade-in">
+                <h3 style="margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 10px; color: var(--primary);">
+                    <i class="fa-solid fa-phone"></i> Configuração do WhatsApp da Loja
+                </h3>
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label>Número do WhatsApp para Receber Pedidos (com DDD, apenas números)</label>
+                    <input type="text" id="admin-whatsapp-num" placeholder="Ex: 5551986103520" value="5551986103520">
+                </div>
+                <button class="btn btn-sm" onclick="window.appStore.saveStoreSettings()">Salvar Número</button>
+            </div>
+
+            <!-- Formulário Adicionar Item -->
+            <div class="admin-card fade-in">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; color: var(--primary);">
+                    <i class="fa-solid fa-plus-circle"></i> Adicionar Item ao Cardápio
+                </h3>
+                <form id="add-item-form" onsubmit="window.appStore.handleAddItem(event)">
+                    <div class="grid-container" style="gap: 15px; margin-bottom: 15px;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Nome do Produto *</label>
+                            <input type="text" id="itemName" required placeholder="Ex: Lanhadu's Triplo Cheddar">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Categoria</label>
+                            <select id="itemCategory">
+                                <option value="Xis">Xis</option>
+                                <option value="Cachorro Quente">Cachorro Quente</option>
+                                <option value="Porções">Porções & Picadão</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Adicionais">Adicionais</option>
+                                <option value="Sobremesas">Sobremesas</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Preço (R$) *</label>
+                            <input type="number" step="0.01" id="itemPrice" required placeholder="29.90">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Oferta do Dia?</label>
+                            <select id="itemOffer" onchange="window.appStore.toggleOfferDays()">
+                                <option value="nao">Não</option>
+                                <option value="sim">Sim</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL da Imagem (Opcional)</label>
+                        <input type="url" id="itemImg" placeholder="https://exemplo.com/imagem.jpg">
+                    </div>
+                    
+                    <!-- Seleção de Dias da Oferta -->
+                    <div class="form-group" id="offer-days-group" style="display: none; background: #222; padding: 15px; border-radius: 8px; border: 1px solid #333;">
+                        <label style="color: var(--primary); margin-bottom: 8px;">Dias da semana em que a oferta ficará ativa:</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 8px;">
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Segunda" checked> Seg</label>
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Terça" checked> Ter</label>
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Quarta" checked> Qua</label>
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Quinta" checked> Qui</label>
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Sexta" checked> Sex</label>
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Sábado" checked> Sáb</label>
+                            <label style="font-weight: normal; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; gap: 6px;"><input type="checkbox" name="offerDays" value="Domingo" checked> Dom</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição Breve dos Ingredientes *</label>
+                        <input type="text" id="itemDesc" required placeholder="Ex: Pão brioche, 2x hambúrguer 160g, cheddar duplo...">
+                    </div>
+                    <button type="submit" class="btn"><i class="fa-solid fa-floppy-disk"></i> Salvar Produto</button>
+                </form>
+            </div>
+
+            <!-- Lista dos itens salvos -->
+            <div class="admin-card fade-in">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; color: var(--primary);">
+                    <i class="fa-solid fa-list-check"></i> Gerenciar Itens do Cardápio
+                </h3>
+                <div id="admin-list-container">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            signOut, 
+            onAuthStateChanged, 
+            signInWithCustomToken,
+            signInAnonymously
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            collection,
+            onSnapshot,
+            addDoc,
+            deleteDoc
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Configurações do Firebase
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'lanhadus-delivery';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' && __firebase_config ? JSON.parse(__firebase_config) : {};
+        
+        let app, auth, db;
+        let isDbConnected = false;
+
+        try {
+            if (firebaseConfig && firebaseConfig.apiKey) {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                isDbConnected = true;
+            }
+        } catch (error) {
+            console.warn("Executando em modo de memória local.", error);
+        }
+
+        // Estado Global
+        let currentUser = null;
+        let currentUserProfile = null;
+        let whatsappNumber = "5551986103520";
+        let activeCategoryFilter = "Todos";
+
+        window.mockUsers = window.mockUsers || [];
+
+        function formatAuthError(error) {
+            const code = error?.code || '';
+            if (code.includes('operation-not-allowed')) return "O login por E-mail/Senha não está ativado no Firebase Console (Authentication > Sign-in method). Ative a opção no console para usar o banco remoto.";
+            if (code.includes('email-already-in-use')) return "Este e-mail já está cadastrado no banco de dados.";
+            if (code.includes('invalid-email')) return "Digite um e-mail válido.";
+            if (code.includes('weak-password')) return "A senha precisa ter pelo menos 6 caracteres.";
+            if (code.includes('wrong-password') || code.includes('invalid-credential') || code.includes('user-not-found')) return "E-mail ou senha incorretos.";
+            return error.message || "Erro de conexão com o banco de dados.";
+        }
+
+        let produtos = [
+            // --- XIS ---
+            { id: 1, nome: "X Carne", categoria: "Xis", preco: 23.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e carne bovina suculenta.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=60" },
+            { id: 2, nome: "X Frango", categoria: "Xis", preco: 23.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e frango grelhado bem temperado.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1615297928064-24977384d0da?auto=format&fit=crop&w=500&q=60" },
+            { id: 3, nome: "X Calabresa", categoria: "Xis", preco: 24.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e calabresa fatiada na chapa.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=60" },
+            { id: 4, nome: "X Carne Acebolado", categoria: "Xis", preco: 26.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e carne com cebola dourada.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=60" },
+            { id: 5, nome: "X Strogonoff", categoria: "Xis", preco: 29.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e strogonoff cremoso especial.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=500&q=60" },
+            { id: 6, nome: "X Frango C/Bacon", categoria: "Xis", preco: 31.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo, frango e bacon crocante.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=60" },
+            { id: 7, nome: "X Carne C/Bacon", categoria: "Xis", preco: 31.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo, carne e tiras de bacon crocante.", oferta: true, diasOferta: ["Sexta", "Sábado", "Domingo"], img: "https://images.unsplash.com/photo-1594212754590-7c093a1005a7?auto=format&fit=crop&w=500&q=60" },
+            { id: 8, nome: "X Carne Duplo", categoria: "Xis", preco: 32.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, duplo carne, duplo queijo e duplo ovo.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=500&q=60" },
+            { id: 9, nome: "X Coração", categoria: "Xis", preco: 32.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e coração de frango temperado.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=60" },
+            { id: 10, nome: "X Carne de Panela", categoria: "Xis", preco: 33.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e carne de panela desfiada e suculenta.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=500&q=60" },
+            { id: 11, nome: "X Lanhadu's", categoria: "Xis", preco: 35.00, desc: "O especial da casa! Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e recheio duplo especial.", oferta: true, diasOferta: ["Segunda", "Terça", "Quarta", "Quinta"], img: "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?auto=format&fit=crop&w=500&q=60" },
+            { id: 12, nome: "X Duplo Bacon c/Cheddar", categoria: "Xis", preco: 38.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, cheddar cremoso e muito bacon crocante.", oferta: true, diasOferta: ["Sexta", "Sábado", "Domingo"], img: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=60" },
+            { id: 13, nome: "X Filé de Alcatra", categoria: "Xis", preco: 32.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo e filé de alcatra selecionado.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1508737027454-e6454ef45afd?auto=format&fit=crop&w=500&q=60" },
+            { id: 14, nome: "X Filé de Alcatra c/ Pasta Santa Massa", categoria: "Xis", preco: 33.00, desc: "Pão massinha, maionese, tomate, milho, ervilha, ovo, queijo, filé de alcatra e pasta de alho Santa Massa.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=500&q=60" },
+
+            // --- CACHORRO QUENTE PRENSADO ---
+            { id: 15, nome: "Dog 1 Salsicha", categoria: "Cachorro Quente", preco: 12.00, desc: "Pão prensado, 1 salsicha, maionese, milho, ervilha, molho especial e batata palha.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=500&q=60" },
+            { id: 16, nome: "Dog 2 Salsichas", categoria: "Cachorro Quente", preco: 14.00, desc: "Pão prensado, 2 salsichas, maionese, milho, ervilha, molho especial e batata palha.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?auto=format&fit=crop&w=500&q=60" },
+            { id: 17, nome: "Dog Calabresa", categoria: "Cachorro Quente", preco: 16.00, desc: "Pão prensado, calabresa fatiada na chapa, maionese, milho, ervilha, molho e batata palha.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=500&q=60" },
+
+            // --- BEBIDAS ---
+            { id: 18, nome: "Refri 2L Sabores", categoria: "Bebidas", preco: 13.00, desc: "Refrigerante de 2 Litros bem gelado (Guaraná, Fanta, Sprite, Fruki).", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1581006852262-e4307cf6283a?auto=format&fit=crop&w=500&q=60" },
+            { id: 19, nome: "Refri 2L Coca Cola", categoria: "Bebidas", preco: 15.00, desc: "Garrafa de Coca-Cola 2 Litros estupidamente gelada.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=60" },
+
+            // --- PORÇÕES E PICADÃO ---
+            { id: 20, nome: "Batata Frita 400g", categoria: "Porções", preco: 18.00, desc: "Batata frita crocante e douradinha (400g). Acompanha maionese caseira.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=500&q=60" },
+            { id: 21, nome: "Batata Frita 600g", categoria: "Porções", preco: 22.00, desc: "Porção bem servida de batata frita (600g). Acompanha maionese caseira.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=500&q=60" },
+            { id: 22, nome: "Batata Frita C/Bacon e Cheddar Pequena", categoria: "Porções", preco: 26.00, desc: "Batata frita coberta com cheddar cremoso e bacon em cubos. Acompanha maionese caseira.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=500&q=60" },
+            { id: 23, nome: "Batata Frita C/Bacon e Cheddar Grande", categoria: "Porções", preco: 32.00, desc: "Porção grande de batata frita com muito cheddar e bacon crocante. Acompanha maionese caseira.", oferta: true, diasOferta: ["Sexta", "Sábado", "Domingo"], img: "https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=500&q=60" },
+            { id: 24, nome: "Picadão Pequeno", categoria: "Porções", preco: 49.90, desc: "Mix completo de carnes, calabresa, queijo, azeitona, ovo de codorna e fritas. Acompanha maionese caseira.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=60" },
+            { id: 25, nome: "Picadão Médio", categoria: "Porções", preco: 69.90, desc: "Porção generosa para compartilhar: carnes, frango, calabresa, queijo, fritas e coração. Acompanha maionese caseira.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=60" },
+            { id: 26, nome: "Mega Picadão", categoria: "Porções", preco: 99.90, desc: "O Rei da Fome! Porção gigante recheada de carnes, frango, calabresa, coração, queijo, azeitonas e muita batata frita. Acompanha maionese caseira.", oferta: true, diasOferta: ["Sexta", "Sábado", "Domingo"], img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=500&q=60" },
+
+            // --- ADICIONAIS ---
+            { id: 27, nome: "Ovo Adicional", categoria: "Adicionais", preco: 3.00, desc: "Adicional de 1 ovo frito no ponto certo.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=500&q=60" },
+            { id: 28, nome: "Cebola Adicional", categoria: "Adicionais", preco: 3.00, desc: "Porção extra de cebola douradinha na chapa.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=500&q=60" },
+            { id: 29, nome: "Barbecue Adicional", categoria: "Adicionais", preco: 5.00, desc: "Porção de molho Barbecue defumado extra.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1514944288352-fffac99f0bdf?auto=format&fit=crop&w=500&q=60" },
+            { id: 30, nome: "Cheddar Adicional", categoria: "Adicionais", preco: 6.00, desc: "Porção extra de cheddar cremoso derretido.", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?auto=format&fit=crop&w=500&q=60" },
+            { id: 31, nome: "Batata Frita Adicional 150g", categoria: "Adicionais", preco: 8.00, desc: "Porção extra de batata frita crocante (150g).", oferta: false, diasOferta: [], img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=500&q=60" }
+        ];
+
+        window.appUI = {
+            showModal: (title, message, isConfirm = false, onConfirm = null) => {
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-message').innerText = message;
+                const modal = document.getElementById('custom-modal');
+                const cancelBtn = document.getElementById('modal-cancel');
+                const confirmBtn = document.getElementById('modal-confirm');
+
+                modal.style.display = 'flex';
+                confirmBtn.onclick = null;
+                cancelBtn.onclick = null;
+
+                confirmBtn.onclick = () => {
+                    modal.style.display = 'none';
+                    if (onConfirm) onConfirm();
+                };
+
+                if (isConfirm) {
+                    cancelBtn.style.display = 'inline-flex';
+                    cancelBtn.onclick = () => modal.style.display = 'none';
+                } else {
+                    cancelBtn.style.display = 'none';
+                }
+            },
+            updateHeader: () => {
+                const navLoginBtn = document.getElementById('nav-login-btn');
+                const navUserInfo = document.getElementById('nav-user-info');
+                const navAdminBtn = document.getElementById('nav-admin-btn');
+                const navLogoutBtn = document.getElementById('nav-logout-btn');
+
+                if (currentUser && currentUserProfile) {
+                    if (navLoginBtn) navLoginBtn.style.display = 'none';
+                    if (navUserInfo) navUserInfo.style.display = 'block';
+                    if (navLogoutBtn) navLogoutBtn.style.display = 'block';
+                    
+                    const name = currentUserProfile.name || (currentUser.email ? currentUser.email.split('@')[0] : 'Cliente');
+                    const role = currentUserProfile.role === 'admin' ? 'ADMIN' : 'CLIENTE';
+
+                    const nameEl = document.getElementById('auth-user-name');
+                    const roleEl = document.getElementById('auth-role-badge');
+                    if (nameEl) nameEl.innerText = name;
+                    if (roleEl) {
+                        roleEl.innerText = role;
+                        roleEl.style.background = role === 'ADMIN' ? '#ff6b00' : '#28a745';
+                    }
+
+                    if (navAdminBtn) {
+                        navAdminBtn.style.display = currentUserProfile.role === 'admin' ? 'block' : 'none';
+                    }
+
+                } else {
+                    if (navLoginBtn) navLoginBtn.style.display = 'block';
+                    if (navUserInfo) navUserInfo.style.display = 'none';
+                    if (navAdminBtn) navAdminBtn.style.display = 'none';
+                    if (navLogoutBtn) navLogoutBtn.style.display = 'none';
+                }
+            }
+        };
+
+        window.appNav = {
+            hideAll: () => {
+                document.getElementById('customer-view').style.display = 'none';
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('admin-view').style.display = 'none';
+            },
+            showCustomer: () => {
+                window.appNav.hideAll();
+                document.getElementById('customer-view').style.display = 'block';
+                window.scrollTo(0, 0);
+            },
+            showLogin: () => {
+                window.appNav.hideAll();
+                document.getElementById('login-view').style.display = 'flex';
+                window.scrollTo(0, 0);
+            },
+            showAdmin: () => {
+                if (!currentUser || !currentUserProfile) {
+                    window.appUI.showModal("Acesso Restrito", "Faça login com sua conta de Administrador para acessar este painel.");
+                    window.appNav.showLogin();
+                    return;
+                }
+                
+                if (currentUserProfile.role !== 'admin') {
+                    window.appUI.showModal("Acesso Negado", "Sua conta é de 'Cliente'. Apenas Administradores podem acessar este painel.");
+                    return;
+                }
+
+                window.appNav.hideAll();
+                document.getElementById('admin-view').style.display = 'block';
+                window.appStore.renderAdminList();
+                window.scrollTo(0, 0);
+            }
+        };
+
+        window.appAuth = {
+            switchTab: (tab) => {
+                const formLogin = document.getElementById('form-login');
+                const formReg = document.getElementById('form-register');
+                const tabLogin = document.getElementById('tab-login');
+                const tabReg = document.getElementById('tab-register');
+                
+                document.getElementById('login-error-msg').style.display = 'none';
+                document.getElementById('reg-error-msg').style.display = 'none';
+
+                if (tab === 'login') {
+                    formLogin.style.display = 'block';
+                    formReg.style.display = 'none';
+                    tabLogin.classList.add('active');
+                    tabReg.classList.remove('active');
+                } else {
+                    formLogin.style.display = 'none';
+                    formReg.style.display = 'block';
+                    tabLogin.classList.remove('active');
+                    tabReg.classList.add('active');
+                }
+            },
+
+            handleLogin: async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value.trim();
+                const pass = document.getElementById('login-password').value;
+                const btn = document.getElementById('btn-login-submit');
+                const errorBox = document.getElementById('login-error-msg');
+                errorBox.style.display = 'none';
+
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Entrando...`;
+
+                try {
+                    let loggedIn = false;
+                    if (isDbConnected && auth) {
+                        try {
+                            // Autenticação real com Firebase Auth
+                            const credential = await signInWithEmailAndPassword(auth, email, pass);
+                            const user = credential.user;
+
+                            // Busca perfil do usuário no Firestore
+                            const profileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'info');
+                            const docSnap = await getDoc(profileRef);
+
+                            if (docSnap.exists()) {
+                                currentUserProfile = docSnap.data();
+                            } else {
+                                currentUserProfile = { name: email.split('@')[0], email, role: 'customer' };
+                            }
+
+                            currentUser = user;
+                            loggedIn = true;
+                        } catch (firebaseErr) {
+                            if (firebaseErr?.code?.includes('operation-not-allowed') || firebaseErr?.code?.includes('unauthorized-domain')) {
+                                console.warn("Firebase Auth operation-not-allowed. Realizando fallback para autenticação local.", firebaseErr);
+                            } else {
+                                throw firebaseErr;
+                            }
+                        }
+                    }
+
+                    if (!loggedIn) {
+                        // Fallback Local
+                        let localUser = window.mockUsers.find(u => u.email.toLowerCase() === email.toLowerCase() && u.pass === pass);
+                        if (!localUser) {
+                            const isDemoAdmin = email.toLowerCase().includes('admin');
+                            localUser = {
+                                uid: 'local-' + Date.now(),
+                                name: email.split('@')[0],
+                                email: email,
+                                pass: pass,
+                                role: isDemoAdmin ? 'admin' : 'customer'
+                            };
+                            window.mockUsers.push(localUser);
+                        }
+                        currentUser = { uid: localUser.uid, email: localUser.email };
+                        currentUserProfile = { 
+                            name: localUser.name || email.split('@')[0], 
+                            email: localUser.email, 
+                            role: localUser.role || 'customer', 
+                            phone: localUser.phone || '', 
+                            address: localUser.address || '' 
+                        };
+                        window.appUI.updateHeader();
+                        window.appUI.showModal("Login Realizado (Modo Local)", `Bem-vindo de volta, ${currentUserProfile.name}!`);
+                        window.appNav.showCustomer();
+                        return;
+                    }
+
+                    window.appUI.updateHeader();
+                    window.appUI.showModal("Login Concluído!", `Bem-vindo de volta, ${currentUserProfile.name}!`);
+                    window.appNav.showCustomer();
+                } catch (error) {
+                    console.error("Erro no Login:", error);
+                    errorBox.innerText = formatAuthError(error);
+                    errorBox.style.display = 'block';
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Entrar na Conta`;
+                }
+            },
+
+            handleRegister: async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('reg-name').value.trim();
+                const email = document.getElementById('reg-email').value.trim();
+                const phone = document.getElementById('reg-phone').value.trim();
+                const address = document.getElementById('reg-address').value.trim();
+                const pass = document.getElementById('reg-password').value;
+                const role = document.getElementById('reg-role').value;
+                const btn = document.getElementById('btn-reg-submit');
+                const errorBox = document.getElementById('reg-error-msg');
+                errorBox.style.display = 'none';
+
+                if (!name || !email || !pass || !phone) {
+                    errorBox.innerText = "Preencha todos os campos obrigatórios (*).";
+                    errorBox.style.display = 'block';
+                    return;
+                }
+
+                // Validação do padrão (00)000000000
+                const phoneRegex = /^\(\d{2}\)\d{9}$/;
+                if (!phoneRegex.test(phone)) {
+                    errorBox.innerText = "Informe o telefone no modelo exato (00)000000000.";
+                    errorBox.style.display = 'block';
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Cadastrando no Banco...`;
+
+                try {
+                    let registeredInFirebase = false;
+                    if (isDbConnected && auth && db) {
+                        try {
+                            // 1. Cria usuário no Firebase Auth
+                            const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+                            const user = userCredential.user;
+
+                            // 2. Grava dados do perfil no Firestore
+                            const profileData = {
+                                uid: user.uid,
+                                name,
+                                email,
+                                phone,
+                                address,
+                                role,
+                                createdAt: new Date().toISOString()
+                            };
+
+                            const profileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'info');
+                            await setDoc(profileRef, profileData);
+
+                            currentUser = user;
+                            currentUserProfile = profileData;
+                            registeredInFirebase = true;
+                        } catch (firebaseErr) {
+                            if (firebaseErr?.code?.includes('operation-not-allowed') || firebaseErr?.code?.includes('unauthorized-domain')) {
+                                console.warn("Firebase Auth operation-not-allowed no cadastro. Realizando fallback para salvamento local.", firebaseErr);
+                            } else {
+                                throw firebaseErr;
+                            }
+                        }
+                    }
+
+                    if (!registeredInFirebase) {
+                        // Fallback em memória
+                        const mockUid = 'user-' + Date.now();
+                        const profileData = { uid: mockUid, name, email, phone, address, role, pass };
+                        window.mockUsers.push(profileData);
+
+                        currentUser = { uid: mockUid, email };
+                        currentUserProfile = profileData;
+
+                        window.appUI.updateHeader();
+                        window.appUI.showModal("Conta Registrada (Modo Local)", `Olá ${name}, sua conta de ${role === 'admin' ? 'Administrador' : 'Cliente'} foi registrada com sucesso!`);
+                        window.appNav.showCustomer();
+                    } else {
+                        window.appUI.updateHeader();
+                        window.appUI.showModal("Conta Criada com Sucesso!", `Olá ${name}, sua conta de ${role === 'admin' ? 'Administrador' : 'Cliente'} foi registrada no banco de dados!`);
+                        window.appNav.showCustomer();
+                    }
+
+                    // Limpa formulário
+                    document.getElementById('form-register').reset();
+                } catch (error) {
+                    console.error("Erro no Cadastro:", error);
+                    errorBox.innerText = formatAuthError(error);
+                    errorBox.style.display = 'block';
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Registrar Conta no Banco`;
+                }
+            },
+
+            logout: async () => {
+                if (isDbConnected && auth && auth.currentUser) {
+                    try { await signOut(auth); } catch(e) {}
+                }
+                currentUser = null;
+                currentUserProfile = null;
+                window.appUI.updateHeader();
+                window.appUI.showModal("Sessão Encerrada", "Você saiu da sua conta.");
+                window.appNav.showCustomer();
+            }
+        };
+
+        async function setupDatabaseSync() {
+            if (!isDbConnected || !auth) return;
+
+            try {
+                // Autenticação inicial (RULE 3)
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token && !auth.currentUser) {
+                    await signInWithCustomToken(auth, __initial_auth_token).catch(() => {});
+                }
+
+                // Listener de mudanças no Auth State
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        currentUser = user;
+                        try {
+                            const profileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'info');
+                            const docSnap = await getDoc(profileRef);
+                            if (docSnap.exists()) {
+                                currentUserProfile = docSnap.data();
+                            } else if (!currentUserProfile) {
+                                currentUserProfile = { role: 'customer', name: user.email ? user.email.split('@')[0] : 'Cliente' };
+                            }
+                        } catch(e) {
+                            if (!currentUserProfile) {
+                                currentUserProfile = { role: 'customer', name: 'Cliente' };
+                            }
+                        }
+                    }
+                    window.appUI.updateHeader();
+                });
+
+                // Listener em tempo real dos itens do cardápio salvos no Firestore
+                // (RULE 1: /artifacts/{appId}/public/data/menu_items)
+                const menuItemsRef = collection(db, 'artifacts', appId, 'public', 'data', 'menu_items');
+                onSnapshot(menuItemsRef, (snapshot) => {
+                    if (!snapshot.empty) {
+                        const dbItems = [];
+                        snapshot.forEach(docSnap => {
+                            dbItems.push({ id: docSnap.id, ...docSnap.data() });
+                        });
+                        if (dbItems.length > 0) {
+                            // Mescla/Substitui lista local
+                            produtos = dbItems;
+                            window.appStore.renderStore();
+                            if (currentUserProfile?.role === 'admin') {
+                                window.appStore.renderAdminList();
+                            }
+                        }
+                    }
+                }, (err) => {
+                    console.warn("Erro ao escutar dados públicos:", err);
+                });
+
+            } catch (err) {
+                console.warn("Aviso na inicialização do Firebase:", err);
+            }
+        }
+
+        // Inicia sincronização
+        setupDatabaseSync();
+
+        const regPhoneInput = document.getElementById('reg-phone');
+        if (regPhoneInput) {
+            regPhoneInput.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '');
+                if (v.length > 11) v = v.substring(0, 11);
+                
+                if (v.length > 2) {
+                    e.target.value = `(${v.substring(0, 2)})${v.substring(2)}`;
+                } else if (v.length > 0) {
+                    e.target.value = `(${v}`;
+                } else {
+                    e.target.value = '';
+                }
+            });
+        }
+
+        window.appStore = {
+            formataMoeda: (valor) => `R$ ${parseFloat(valor).toFixed(2).replace('.', ',')}`,
+
+            getWppItemLink: (prod) => {
+                const msg = `Olá! Gostaria de pedir o item do cardápio:\n\n🍔 *${prod.nome}*\n💰 *Valor:* ${window.appStore.formataMoeda(prod.preco)}\n📝 *Ingredientes:* ${prod.desc}`;
+                return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+            },
+
+            filterCategory: (cat, btn) => {
+                activeCategoryFilter = cat;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                if (btn) btn.classList.add('active');
+                window.appStore.renderStore();
+            },
+            
+            toggleOfferDays: () => {
+                const isOffer = document.getElementById('itemOffer').value === 'sim';
+                document.getElementById('offer-days-group').style.display = isOffer ? 'block' : 'none';
+            },
+
+            saveStoreSettings: () => {
+                const newNum = document.getElementById('admin-whatsapp-num').value.trim();
+                if (newNum) {
+                    whatsappNumber = newNum;
+                    document.getElementById('footer-phone-display').innerText = newNum;
+                    
+                    const wppFloatBtn = document.getElementById('wpp-float-link');
+                    if (wppFloatBtn) {
+                        wppFloatBtn.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Olá! Gostaria de fazer um pedido.')}`;
+                    }
+
+                    window.appUI.showModal("Sucesso", "Número do WhatsApp atualizado!");
+                    window.appStore.renderStore();
+                }
+            },
+
+            renderStore: () => {
+                const ofertasContainer = document.getElementById('ofertas-container');
+                const cardapioContainer = document.getElementById('cardapio-container');
+                
+                if (ofertasContainer) ofertasContainer.innerHTML = '';
+                if (cardapioContainer) cardapioContainer.innerHTML = '';
+
+                const diasSemana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+                const diaAtual = diasSemana[new Date().getDay()];
+
+                produtos.forEach(prod => {
+                    if (activeCategoryFilter !== 'Todos' && prod.categoria !== activeCategoryFilter) {
+                        return;
+                    }
+
+                    const temOferta = prod.oferta;
+                    const diasValidos = prod.diasOferta || [];
+                    const disponivelHoje = temOferta ? (diasValidos.length === 0 || diasValidos.includes(diaAtual)) : true;
+                    
+                    let diasTexto = '';
+                    if (temOferta && diasValidos.length > 0) {
+                        diasTexto = `<div style="font-size: 0.78rem; color: var(--primary); margin-bottom: 8px;"><i class="fa-regular fa-calendar-check"></i> Oferta: ${diasValidos.join(', ')}</div>`;
+                    }
+
+                    const wppUrl = window.appStore.getWppItemLink(prod);
+
+                    const cardHTML = `
+                        <div class="card fade-in">
+                            ${temOferta ? `<span class="badge" style="background:${disponivelHoje ? '#ff2a2a' : '#555'};">${disponivelHoje ? 'OFERTA DO DIA' : 'OFERTA'}</span>` : ''}
+                            <img src="${prod.img || 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=60'}" alt="${prod.nome}" class="card-img" loading="lazy">
+                            <div class="card-content">
+                                <h3 class="card-title">${prod.nome}</h3>
+                                <p class="card-desc">${prod.desc}</p>
+                                ${diasTexto}
+                                <p class="card-price">${window.appStore.formataMoeda(prod.preco)}</p>
+                                ${temOferta && !disponivelHoje ? 
+                                    `<button class="btn" style="width: 100%; background: #444; cursor: not-allowed;" onclick="window.appUI.showModal('Oferta Indisponível Hoje', 'Esta promoção é válida nos dias: ${diasValidos.join(', ')}.')"><i class="fa-solid fa-clock"></i> Indisponível Hoje</button>` :
+                                    `<a href="${wppUrl}" target="_blank" class="btn" style="width: 100%; background-color: #25d366; color: #fff;"><i class="fa-brands fa-whatsapp"></i> Pedir no WhatsApp</a>`
+                                }
+                            </div>
+                        </div>
+                    `;
+
+                    if (temOferta && ofertasContainer) ofertasContainer.innerHTML += cardHTML;
+                    if (cardapioContainer) cardapioContainer.innerHTML += cardHTML;
+                });
+            },
+
+            renderAdminList: () => {
+                const listContainer = document.getElementById('admin-list-container');
+                if (!listContainer) return;
+                listContainer.innerHTML = '';
+
+                produtos.forEach(prod => {
+                    const diasInfo = (prod.oferta && prod.diasOferta && prod.diasOferta.length > 0) ? ` (${prod.diasOferta.join(', ')})` : '';
+                    listContainer.innerHTML += `
+                        <div class="admin-list-item">
+                            <div>
+                                <strong style="color:var(--primary); font-size: 1rem;">${prod.nome}</strong> 
+                                <span style="font-size:0.85rem; color:#aaa;">[${prod.categoria}]</span> - ${window.appStore.formataMoeda(prod.preco)}
+                                ${prod.oferta ? `<span style="color: #ff2a2a; font-size:0.8rem; margin-left:8px; font-weight:bold;">[OFERTA${diasInfo}]</span>` : ''}
+                            </div>
+                            <button class="btn btn-danger btn-sm" onclick="window.appStore.confirmRemove('${prod.id}')"><i class="fa-solid fa-trash"></i> Remover</button>
+                        </div>
+                    `;
+                });
+            },
+
+            handleAddItem: async (e) => {
+                e.preventDefault();
+                
+                const isOffer = document.getElementById('itemOffer').value === 'sim';
+                const selectedDays = [];
+                if (isOffer) {
+                    document.querySelectorAll('input[name="offerDays"]:checked').forEach(cb => {
+                        selectedDays.push(cb.value);
+                    });
+                }
+
+                const imgUrl = document.getElementById('itemImg').value.trim();
+
+                const novoItem = {
+                    nome: document.getElementById('itemName').value.trim(),
+                    categoria: document.getElementById('itemCategory').value,
+                    preco: parseFloat(document.getElementById('itemPrice').value),
+                    desc: document.getElementById('itemDesc').value.trim(),
+                    oferta: isOffer,
+                    diasOferta: selectedDays,
+                    img: imgUrl || "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=60"
+                };
+
+                if (isDbConnected && db) {
+                    try {
+                        // Grava no Firestore na coleção pública (RULE 1: /artifacts/{appId}/public/data/menu_items)
+                        const docRef = await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'menu_items'), novoItem);
+                        novoItem.id = docRef.id;
+                    } catch(err) {
+                        console.warn("Salvo apenas em memória:", err);
+                        novoItem.id = 'prod-' + Date.now();
+                        produtos.push(novoItem);
+                    }
+                } else {
+                    novoItem.id = 'prod-' + Date.now();
+                    produtos.push(novoItem);
+                }
+
+                document.getElementById('add-item-form').reset();
+                window.appStore.toggleOfferDays();
+                
+                window.appUI.showModal("Sucesso!", "Novo produto adicionado ao cardápio e salvo no banco de dados.");
+                window.appStore.renderAdminList();
+                window.appStore.renderStore();
+            },
+
+            confirmRemove: (id) => {
+                window.appUI.showModal(
+                    "Confirmar Exclusão", 
+                    "Deseja realmente excluir este produto do cardápio?", 
+                    true, 
+                    async () => {
+                        if (isDbConnected && db && typeof id === 'string' && !id.startsWith('prod-')) {
+                            try {
+                                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'menu_items', id));
+                            } catch(e) {
+                                console.warn("Erro ao deletar do Firestore:", e);
+                            }
+                        }
+                        produtos = produtos.filter(p => p.id != id);
+                        window.appStore.renderAdminList();
+                        window.appStore.renderStore();
+                    }
+                );
+            }
+        };
+
+        // Renderização Inicial
+        window.appStore.renderStore();
+    </script>
+</body>
+</html>
